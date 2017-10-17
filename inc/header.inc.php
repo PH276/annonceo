@@ -48,8 +48,8 @@
                                             <li><a  class="<?=  ($page == 'Gestion Categories') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_categories.php">Gestion Categories</a></li>
                                             <li><a  class="<?=  ($page == 'Gestion Membres') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_membres.php">Gestion Membres</a></li>
                                             <li><a  class="<?=  ($page == 'Gestion Annonces') ? 'active' : ''  ?>"  href="<?= RACINE_ANNONCEO ?>backoffice/gestion_annonces.php">Gestion Annonces</a></li>
-                                            <?php endif; ?>
-                                            <li><a href="<?= RACINE_ANNONCEO ?>connexion.php?action=deconnexion">Déconnexion</a>
+                                        <?php endif; ?>
+                                        <li><a href="<?= RACINE_ANNONCEO ?>connexion.php?action=deconnexion">Déconnexion</a>
                                         </ul>
                                     </li>
 
@@ -57,10 +57,10 @@
                                     <li><a  class="<?=  ($page == 'Inscription') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>inscription.php">Inscription</a></li>
                                     <li><a  class="<?=  ($page == 'Connexion') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>connexion.php">Connexion</a></li>
                                 <?php endif; ?>
-                                </ul>
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                    </nav>
-                </div>
-            </header>
-                <div class="container-fluid">
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+            </div>
+        </header>
+        <div class="container-fluid">
