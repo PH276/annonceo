@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= RACINE_ANNONCEO ?>css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styleAdmin.css">
     <link rel="stylesheet" href="<?= RACINE_ANNONCEO ?>css/style.css"/>
@@ -11,8 +11,7 @@
 </head>
 <body>
     <header>
-        <div class="conteneur">
-
+        <!-- <div class="conteneur"> -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,7 +22,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="index.php">Annonceo</a>
+                        <a class="navbar-brand" href="<?= RACINE_ANNONCEO ?>index.php">Annonceo</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,7 +40,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <?php if(userConnecte()) : ?>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Espace membre<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a  class="<?=  ($page == 'Profil') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>profil.php">Profil</a></li>
                                         <?php if(userAdmin()) :	?>
@@ -61,7 +60,7 @@
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
-            </div>
+            <!-- </div> -->
         </header>
-        <body>
+        <main>
             <div class="container-fluid">
