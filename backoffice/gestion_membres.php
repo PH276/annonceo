@@ -13,7 +13,7 @@ $resultat = $pdo->query('SELECT * FROM membre');
 $membres = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 // $contenu .=  '<br>Nombre de membres : '.$resultat->rowCount().'<br><hr>';
 
-$contenu .= '<table border=1>';
+$contenu .= '<table border=1 class="table table-bordered">';
 $contenu .= '<tr>';
 
 for($i=0;$i < $resultat->columnCount();$i++){
