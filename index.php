@@ -85,7 +85,7 @@
 	  	<br/>
 
 		<label>Prix :</label><br/>	
-  			<input name="prix" type="range" min="0" max="100" value="0">
+  			<input name="prix" type="range" max="10000€" min="0 €" step="500€">
   			maximum 10 000 €
 		
 	  	<br/>
@@ -102,5 +102,34 @@
         	<option value="1">Trier par prix (du plus cher au moins cher)</option>
     	</select>
     </form>
+</div>
+<div class="resultat_annonces">
+
+	<div class="annonce">
+		
+	
+	
+		
+		<div>
+			<hr>
+			<p>Iphone 6<br/>
+			<div>
+				<img src="photos/iphone.jpg"/>
+			</div>
+			Ville Paris 75011<br/>
+			Je vends mon iPhone 6 16gb débloqué tout opérateur.<br/>
+			Il est vendu avec son câble de charge officiel et son verre trempé.<br/>
+			Marie-Dominique       220 €<br/>
+			</p>
+			<hr>
+		</div>
+	</div>
+	
+	
+	
+</div>
+	
+	
+	
 </div>
 <?php include ('inc/footer.inc.php') ?>

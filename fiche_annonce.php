@@ -1,5 +1,5 @@
 <?php
-
+/*
 require_once('inc/init.inc.php');
 
 // 1 : On va vérifier qu'il y a bien un id dans l'URL (no vide, numeric)
@@ -42,59 +42,59 @@ debug($_SESSION);
 
 $page = 'repert_annonces';
 require_once('inc/header.inc.php');
+*/
 ?>
 <h1><?= $titre ?></h1>
-
+<div>
 <img src="<?= RACINE_ANNONCEO ?>photo/<?= $photo ?>" width="250" />
-<p>Détails du  : </p>
-<ul>
-	<li>Référence : <b><?= $reference ?></b></li>
-	<li>Catégorie : <b><?= $categorie ?></b></li>
-	<li>Couleur : <b><?= $couleur ?></b></li>
-	<li>Taille : <b><?= $taille ?></b></li>
-	<li>Public : <b><?= $public ?></b></li>
-	<li>Prix : <b style="color: red; font-size:20px"><?= $prix ?>€ TTC</b></li>
-</ul>
-<br/>
-<p>Description du produit : <br/>
-<em><?= $description ?></em></p>	
-
-<fieldset>
-	<legend>Acheter ce produit :</legend>
-	
-	<?php if($stock > 0) : ?>
-	<form method="post" action="">
-		<label>Quantité :</label>
-		<select name="quantite">
-			<?php for($i=1; $i <= 5 && $i <= $stock; $i++) : ?>
-			<option><?= $i ?></option>
-			<?php endfor; ?>
-		</select>
-		<input type="submit" value="Ajouter au panier" />
-	</form>
-	
-	<?php else: ?>
-	<i style="color:red">Rupture de stock !</i>
-	<?php endif; ?>
-	
-	
-</fieldset>
-
-
-<div class="profil" style="overflow:hidden;">
-	<h2>Suggestions de produits</h2>
-	
-	<!-- Dans le PHP faire une requête qui va récupérer des produits (limités à 5): 
-		Soit des produits de la même catégorie (sauf celui qu'on est en train de visiter)
-		
-		Soit les produits des autres catégories
-	-->
-
-	
-	
 </div>
+<div>
+<p>Description : <br/>
+<em><?= $description_longue ?></em></p>
+</div>
+<div>	
+	<ul>
+		<li>Date de publication: <b><?= $datepub ?></b></li>
+		<li>Catégorie : <b><?= $categorie ?></b></li>
+		<li>Prix : <b><?= $prix ?>€ TTC</b></li>
+	</ul>
+</div>
+<div>
+	<fieldset>
+		<legend>Contacter <b><?= $membre ?></b> 
+			<input type="submit" value="Contacter <b><?= $membre ?>"/>
+		</legend>
+	</fieldset>
+</div>
+<div>
+
+ 
+    <h3>My Google Maps Demo</h3>
+    <div id="map" style{height: 100px;width: 100%;}></div>
+		<script>
+		function initMap() {
+			var uluru = {lat: -25.363, lng: 131.044};
+			var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 4,
+			center: clermont-ferrand
+			});
+			var marker = new google.maps.Marker({
+			position: clermont-ferrand,
+			map: map
+			});
+		}
+		</script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWHYF1HxL1feSSF8akAoFjC7uGRk27YG4&callback=initMap">
+		</script>
+</div>
+<div>
+<p><a href="formulaire_de_commentaire.php">déposer un commentaire ou une note</a></p>
+
+<p><a href="annonces.php">retourner vers les annonces</a></p>
 
 
+</div>
 
 <?php
 require_once('inc/footer.inc.php');

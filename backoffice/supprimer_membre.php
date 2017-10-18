@@ -11,9 +11,7 @@ if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 		$membre = $resultat -> fetch(PDO::FETCH_ASSOC);
 		debug($membre);
 
-
 		// supprimer le produit de la BDD :
-
 		$resultat = $pdo -> exec("DELETE FROM membre WHERE id_membre = $membre[id_membre]");
 
 		if($resultat){

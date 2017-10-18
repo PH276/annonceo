@@ -42,6 +42,7 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Espace membre<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a  class="<?=  ($page == 'Profil') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>profil.php">Profil</a></li>
+                                        <li><a  class="<?=  ($page == 'Ajout annonce') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>Ajout_annonce.php">Ajout annonce</a></li>
                                         <?php if(userAdmin()) :	?>
                                             <li><a  class="<?=  ($page == 'Gestion Categories') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_categories.php">Gestion Categories</a></li>
                                             <li><a  class="<?=  ($page == 'Gestion Membres') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_membres.php">Gestion Membres</a></li>
