@@ -5,7 +5,6 @@
     <!-- Bootstrap -->
     <link href="<?= RACINE_ANNONCEO ?>css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/styleAdmin.css">
     <link rel="stylesheet" href="<?= RACINE_ANNONCEO ?>css/style.css"/>
     <title><?= $page ?>Annonceo</title>
 </head>

@@ -34,7 +34,7 @@ $resultat = $pdo->query('SELECT id_annonce,
     for($i=0;$i < $resultat->columnCount();$i++){
         $colonne = $resultat->getColumnMeta($i);
         $contenu .=  '<th>';
-        $contenu .=  str_replace('_', ' ', $colonne['name']);
+        $contenu .=  str_replace('_', '<br>', $colonne['name']);
 
         $contenu .= '</th>';
     }
@@ -48,17 +48,22 @@ $resultat = $pdo->query('SELECT id_annonce,
         foreach($val as $key => $val2){
             // if ($key !='membre_id'){
             $contenu .= '<td>';
-            // switch ($val2){
-            //     case 'membre i'
-            $contenu .=  $val2;
             if ($key == 'photo'){
-                $contenu .= '<p><a href="#">Voir les autres photos</a></p>';
+                if (file_exists('../photos/'.$val2)){
+                    $contenu .=  '<img src="'.'../photos/'.$val2.'" alt="">';
+                    $contenu .= '<p><a href="#">Voir les autres photos</a></p>';
+                }
+                else{
+                    $contenu .=  '';
+                }
+            } else{
+                $contenu .= $val2;
             }
 
             // }
             $contenu .= '</td>';
-            // }
         }
+
         $contenu .= '<td>';
         $contenu .= '<a href="../inscription.php?id='.$val['id_annonce'].'"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
         $contenu .= ' <a href="supprimer_membre.php?id='.$val['id_annonce'].'"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
@@ -67,13 +72,12 @@ $resultat = $pdo->query('SELECT id_annonce,
     }
     $contenu .= '</table>';
 
-
     $page = 'gestion annonces - ';
     require_once ('../inc/header.inc.php');
     ?>
     <!--  contenu HTML  -->
     <h1>Gestion des annonces</h1>
-    <div class="row">
+    <section class="row">
         <div class="col-md-4">
             <select>
                 <option value="">Trier par catégorie</option>
@@ -81,13 +85,13 @@ $resultat = $pdo->query('SELECT id_annonce,
                 <option value="">Trier par date d'enregistrement</option>
             </select>
         </div>
-    </div>
-
-    <div class="row">
+    </section>
+    <hr>
+    <section class="row">
         <div class="col-md-12">
             <?= $contenu ?>
         </div>
-    </div>
+    </section>
 
 
     <?php require_once ('../inc/footer.inc.php'); ?>
