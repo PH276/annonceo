@@ -32,7 +32,7 @@ if(!empty($_POST)){
 // }
 //
 $resultat = $pdo->query('SELECT * FROM categorie');
-$membres = $resultat -> fetchAll(PDO::FETCH_ASSOC);
+$categories = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 // $contenu .=  '<br>Nombre de membres : '.$resultat->rowCount().'<br><hr>';
 
 $contenu .= '<table border=1 class="table table-bordered">';
@@ -49,7 +49,7 @@ $contenu .=  'Action';
 $contenu .= '</th>';
 
 $contenu .= '</tr>';
-foreach ($membres as $val){
+foreach ($categories as $val){
     $contenu .= '<tr>';
     foreach($val as $key => $val2){
         $contenu .= '<td>';
