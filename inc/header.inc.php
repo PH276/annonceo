@@ -46,6 +46,8 @@
                                             <li><a  class="<?=  ($page == 'Gestion Categories') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_categories.php">Gestion Categories</a></li>
                                             <li><a  class="<?=  ($page == 'Gestion Membres') ? 'active' : ''  ?>" href="<?= RACINE_ANNONCEO ?>backoffice/gestion_membres.php">Gestion Membres</a></li>
                                             <li><a  class="<?=  ($page == 'Gestion Annonces') ? 'active' : ''  ?>"  href="<?= RACINE_ANNONCEO ?>backoffice/gestion_annonces.php">Gestion Annonces</a></li>
+                                            <li><a  class="<?=  ($page == 'Gestion Commentaires') ? 'active' : ''  ?>"  href="<?= RACINE_ANNONCEO ?>backoffice/gestion_commentaires.php">Gestion Commentaires</a></li>
+                                            <li><a  class="<?=  ($page == 'Gestion Notes') ? 'active' : ''  ?>"  href="<?= RACINE_ANNONCEO ?>backoffice/gestion_notes.php">Gestion Notes</a></li>
                                         <?php endif; ?>
                                         <li><a href="<?= RACINE_ANNONCEO ?>connexion.php?action=deconnexion">Déconnexion</a>
                                         </ul>

@@ -55,7 +55,6 @@ if(!empty($_POST)){
 		// enregistrement du nouvel utilisateur :
 
 		// Attention, le pseudo et le mail est-il disponible ?
-		echo 'req';
 		$resultat = $pdo -> prepare("SELECT * FROM membre WHERE pseudo = :pseudo ");
 		$resultat -> bindParam(':pseudo', $_POST['pseudo'], PDO::PARAM_STR);
 		$resultat -> execute();
@@ -67,7 +66,6 @@ if(!empty($_POST)){
 			$msg .= '<div class="erreur">Le pseudo ' . $_POST['pseudo'] . ' n\'est pas disponible, veuillez choisir un autre pseudo.</div>';
 		}
 		else{ // OK le pseudo est dispo on va enregistrer le membre dans la BDD... (attention, nous devrions également vérifier la disponibilité de l'email.
-			echo 'ins';
 			// crypte le MDP
 			$mdp = md5($_POST['mdp']); // md5() va crypté le mdp selon en hashage 64o
 
@@ -88,7 +86,7 @@ if(!empty($_POST)){
 				header('location:connexion.php');
 			}
 			else {
-				echo 'err_sql';
+				msg = ;
 			}
 		} // fin du else rowCount()
 	} // fin du if !empty $msg

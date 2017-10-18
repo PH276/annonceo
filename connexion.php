@@ -44,8 +44,6 @@ if(!empty($_POST)){
 
 				// TOUT EST OK on peut connecter l'utilisateur :
 
-
-
 				foreach($membre as $indice => $valeur){
 					if($indice != 'mdp'){
 						$_SESSION['membre'][$indice] = $valeur;
