@@ -1,8 +1,6 @@
 <?php
 require_once('inc/init.inc.php');
 
-
-
 // traitement pour la déconnexion :
 if(isset($_GET['action']) && $_GET['action'] == 'deconnexion'){
 // Si une action est demandée dans l'url... et que cette action est "déconnexion" alors on procède à la deconnexion.
@@ -15,7 +13,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'deconnexion'){
 if(userConnecte()){
 	header('location:index.php');
 }
-
 
 // Formulaire activé ?
 // Debug() pour vérifier

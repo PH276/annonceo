@@ -86,7 +86,7 @@ if(!empty($_POST)){
 				header('location:connexion.php');
 			}
 			else {
-				msg = ;
+				$msg = 'erreur SQL (insertion) ';
 			}
 		} // fin du else rowCount()
 	} // fin du if !empty $msg

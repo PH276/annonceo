@@ -1,15 +1,17 @@
 <?php
 require_once ('../inc/init.inc.php');
+$id = (isset($_GET['id']) && !empty($_GET['id']))?$_GET['id']:'';
 
-if (isset($_GET['msg']) && $_GET['msg'] == 'validation' && isset($_GET['id'])){
-    $msg .= '<div class="validation">Le membre n° '.$_GET['id'].' a été correctement enregistré !</div>';
-}
-
-if (isset($_GET['msg']) && $_GET['msg'] == 'suppr' && isset($_GET['id'])){
-    $msg .= '<div class="validation">Le membre n° '.$_GET['id'].' a été correctement supprimé !</div>';
-}
+// if (isset($_GET['msg']) && $_GET['msg'] == 'validation' && isset($_GET['id'])){
+//     $msg .= '<div class="validation">Le membre n° '.$_GET['id'].' a été correctement enregistré !</div>';
+// }
+//
+// if (isset($_GET['msg']) && $_GET['msg'] == 'suppr' && isset($_GET['id'])){
+//     $msg .= '<div class="validation">Le membre n° '.$_GET['id'].' a été correctement supprimé !</div>';
+// }
 
 $resultat = $pdo->query('SELECT * FROM membre');
+
 $membres = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 // $contenu .=  '<br>Nombre de membres : '.$resultat->rowCount().'<br><hr>';
 
@@ -62,8 +64,16 @@ $contenu .= '</table>';
 
 $page = 'gestion membres - ';
 require_once ('../inc/header.inc.php');
-?>
 
+
+   $pseudo = 		(isset($_POST['pseudo'])) ? $_POST['pseudo'] : '';
+   $nom = 			(isset($_POST['nom'])) ? $_POST['nom'] : '';
+   $prenom = 		(isset($_POST['prenom'])) ? $_POST['prenom'] : '';
+   $email = 		(isset($_POST['email'])) ? $_POST['email'] : '';
+   $telephone = 		(isset($_POST['telephone'])) ? $_POST['telephone'] : '';
+   $civilite = 	(isset($_POST['civilite'])) ? $_POST['civilite'] : '';
+   $statut = 	(isset($_POST['statut'])) ? $_POST['statut'] : '';
+   ?>
 <!--  contenu HTML  -->
 <h1>Gestion des membres</h1>
 <div class="">
@@ -71,55 +81,5 @@ require_once ('../inc/header.inc.php');
     <?= $contenu ?>
 </div>
 
-<div class="">
-
-    <?php
-    $pseudo = 		(isset($_POST['pseudo'])) ? $_POST['pseudo'] : '';
-    $nom = 			(isset($_POST['nom'])) ? $_POST['nom'] : '';
-    $prenom = 		(isset($_POST['prenom'])) ? $_POST['prenom'] : '';
-    $email = 		(isset($_POST['email'])) ? $_POST['email'] : '';
-    $telephone = 		(isset($_POST['telephone'])) ? $_POST['telephone'] : '';
-    $civilite = 	(isset($_POST['civilite'])) ? $_POST['civilite'] : '';
-    $statut = 	(isset($_POST['statut'])) ? $_POST['statut'] : '';
-    ?>
-
-
-
-    <form method="post" action="">
-        <label >Pseudo</label>
-        <input type="text" name="pseudo" value="<?= $pseudo ?>" placeholder="Pseudo"/>
-
-        <label >Mot de passe</label>
-        <input type="password" name="mdp" placeholder="Mot de passe"/>
-
-        <label >Nom</label>
-        <input type="text" name="nom" value="<?= $nom ?>" placeholder="Nom"/>
-
-        <label >Prenom</label>
-        <input type="text" name="prenom" value="<?= $prenom ?>" placeholder="Prénom"/>
-
-        <label >Email</label>
-        <input type="text" name="email" value="<?= $email ?>" placeholder="Email"/>
-
-        <label >Téléphone</label>
-        <input type="text" name="telephone" value="<?= $telephone ?>" placeholder="Téléphone"/>
-
-        <label >Civilité</label>
-
-        <select name="civilite">
-            <option value="m" selected >Homme</option>
-            <option value="f" <?= ($civilite == 'f') ? 'selected' : '' ?> >Femme</option>
-        </select>
-
-        <label >Statut</label>
-        <select name="civilite">
-
-            <option value="0" selected >Membre</option>
-            <option value="1" <?= ($statut == '1') ? 'selected' : '' ?> >Admin</option>
-        </select>
-
-        <input type="submit" value="Enregistrer">
-    </form>
-</div>
-
+<?php require_once ('../inc/formulaire_profil.inc.php'); ?>
 <?php require_once ('../inc/footer.inc.php'); ?>
