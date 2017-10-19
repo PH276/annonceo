@@ -46,14 +46,10 @@ if(!empty($_POST)){
             $resultat -> bindParam(':civilite', $_POST['civilite'], PDO::PARAM_STR);
             $resultat -> bindParam(':statut', $_POST['statut'], PDO::PARAM_STR);
 
-
             echo ($resultat -> execute());
         } // fin du else rowCount()
     } // fin du if !empty $msg
 }
-
-
-
 
 $id = (isset($_GET['id']) && !empty($_GET['id']))?$_GET['id']:'';
 

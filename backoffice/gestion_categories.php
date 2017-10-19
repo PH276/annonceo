@@ -1,6 +1,5 @@
 <?php
 require_once ('../inc/init.inc.php');
-
 if(!empty($_POST)){
     debug($_POST);
 
@@ -90,7 +89,7 @@ require_once ('../inc/header.inc.php');
         $titre = 	(isset($_GET['titre'])) ? $_GET['titre'] : '';
         $motscles = 	(isset($_GET['motscles'])) ? $_GET['motscles'] : '';
 
-        $action = (isset($_GET)) ? 'Modifier' : 'Ajouter';
+        $action = (isset($_GET['action'])) ? 'Modifier' : 'Ajouter';
 
         ?>
 
