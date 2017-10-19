@@ -5,16 +5,16 @@
 $regions = array(
 	"Auvergne-Rhône-Alpes" => array('01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'),
 	"Bourgogne-Franche-Comté" => array('21', '25', '39', '58', '70', '71', '89', '90'),
-	"Bretagne" => array ('22', '29', '35', '56'),
-	"Centre-Val de Loire" => array ('18', '28', '36', '37', '41', '45'),
-	"Corse" => array ('20'),
-	"Grand-Est" => array ('08', '10', '51', '52', '54', '55', '57', '67', '68', '88'),
-	"Hauts-de-France" => array ('02', '59', '60', '62', '80'),
-	"Île-de-France" => array ('75', '77', '78', '91', '92', '93', '94', '95'),
+	"Bretagne" => array('22', '29', '35', '56'),
+	"Centre-Val de Loire" => array('18', '28', '36', '37', '41', '45'),
+	"Corse" => array('20'),
+	"Grand-Est" => array('08', '10', '51', '52', '54', '55', '57', '67', '68', '88'),
+	"Hauts-de-France" => array('02', '59', '60', '62', '80'),
+	"Île-de-France" => array('75', '77', '78', '91', '92', '93', '94', '95'),
 	"Normandie" => array('14', '27', '50', '61', '76'),
 	"Nouvelle-Aquitaine" => array('16', '17', ' 19', '23', '24', '33', '40', '47', '64', '79', '86', '87'),
-	"Occitanie" => array ('09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'),
-	"Pays-de-la-Loire" => array ('44', '49', '53', '72', '85'),
+	"Occitanie" => array('09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'),
+	"Pays-de-la-Loire" => array('44', '49', '53', '72', '85'),
 	"Provence-Alpes-Côte d'azur" => array('04', '05', '06', '13', '83', '84'),
 );
 
@@ -29,32 +29,39 @@ $membres = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 // ORDER BY moyenne DESC');
 // $membres = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 
-$req = 'SELECT *, prenom FROM annonce
+$req = 'SELECT a.*, prenom FROM annonce a
 LEFT JOIN membre ON id_membre=membre_id WHERE 1';
 
 // filtre de catégorie
-$req .= (isset($_POST['categorie']) && $_POST['categorie']!='0')?' AND categorie_id=' . $_POST['categorie']:'';
+if (isset($_POST['filtrer'])){
+	$req_filtre = (isset($_POST['categorie']) && $_POST['categorie']!='0')?' AND categorie_id=' . $_POST['categorie']:'';
 
-//filtre de région
-if (isset($_POST['region']) && $_POST['region']!='0'){
-	$region = $regions["$_POST[region]"];
-	print_r ($region).'<br>';
-	$departements = '(0';
-	foreach($region as $departement){
-		$departements .= ', '.$departement;
+	//filtre de région
+	if (isset($_POST['region']) && $_POST['region']!='0'){
+		$region = $regions["$_POST[region]"];
+		print_r ($region).'<br>';
+		$departements = '(0';
+		foreach($region as $departement){
+			$departements .= ', '.$departement;
+		}
+		$departements .= ')';
+		echo $departements.'<br>';
+		$req_filtre .= ' AND LEFT (cp, 2) IN ' . $departements;
 	}
-	$departements .= ')';
-	echo $departements.'<br>';
-	$req .= ' AND LEFT (cp, 2) IN ' . $departements;
+	$req_filtre .= (isset($_POST['membre']) && $_POST['membre']!='0')?' AND membre_id=' . $_POST['membre']:'';
+	$req_tri = $_POST['requete_tri'];
+	$req .= $req_filtre.$req_tri;
 }
 
+if (isset($_POST['trier'])){
+	$req_filtre = $_POST['requete_filtre'];
+	$req_tri = ($_POST['tri']!="0")?' ORDER BY ' . $_POST['tri']:'';
+	$req .= $req_filtre.$req_tri;
+}
 // filtre de membre
-$req .= (isset($_POST['membre']) && $_POST['membre']!='0')?' AND membre_id=' . $_POST['membre']:'';
 echo $req.'<br>';
 $resultat = $pdo->query($req. ' LIMIT 0,3 ');
 $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
 
 <?php $page = ''; ?>
@@ -116,10 +123,9 @@ $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 		maximum 10 000 €
 
 		<br/>
+		<input type="hidden" name="requete_tri" value="<?= (isset($req_tri))?$req_tri:'' ?>">
 
-		<input type="submit" value="Filtrer">
-
-
+		<input type="submit" name="filtrer" value="Filtrer">
 
 	</form>
 </div>
@@ -127,19 +133,20 @@ $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 	<form action="" method="post">
 		<select name="tri">
 			<option value="0">Trier par...</option>
-			<option value="prix">Trier par prix (du moins cher au plus cher)</option>
-			<option value="prix DESC">Trier par prix (du plus cher au moins cher)</option>
-			<option value="date_enregistrement DESC">Trier par date (du plus récent au moins récent)</option>
-			<option value="date_enregistrement">Trier par date (moins récent au du plus récent)</option>
-			<option value="">Meilleur vendeur</option>
+			<option value="a.prix">Trier par prix (du moins cher au plus cher)</option>
+			<option value="a.prix DESC">Trier par prix (du plus cher au moins cher)</option>
+			<option value="a.date_enregistrement DESC">Trier par date (du plus récent au moins récent)</option>
+			<option value="a.date_enregistrement">Trier par date (moins récent au du plus récent)</option>
+			<!-- <option value="">Meilleur vendeur</option> -->
 		</select>
+		<input type="hidden" name="requete_filtre" value="<?= (isset($req_filtre))?$req_filtre:'' ?>">
+
+		<input type="submit" name="trier" value="OK">
 	</form>
 </div>
 <div class="resultat_annonces">
 
 	<div class="annonce">
-
-
 
 		<?php foreach ($annonces as $annonce) : ?>
 			<?php
@@ -168,8 +175,6 @@ $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 			</div>
 		<?php endforeach; ?>
 	</div>
-
-
 
 </div>
 
