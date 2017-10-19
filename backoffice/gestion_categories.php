@@ -84,12 +84,12 @@ require_once ('../inc/header.inc.php');
 
         <?php
         debug ($_GET);
-        $id_categorie = (isset($_GET)) ? $_GET['id'] : '';
+        $id_categorie = (isset($_GET['id'])) ? $_GET['id'] : '';
 
         $titre = 	(isset($_GET['titre'])) ? $_GET['titre'] : '';
         $motscles = 	(isset($_GET['motscles'])) ? $_GET['motscles'] : '';
 
-        $action = (isset($_GET['action'])) ? 'Modifier' : 'Ajouter';
+        $action = (isset($_GET['id'])) ? 'Modifier' : 'Ajouter';
 
         ?>
 
