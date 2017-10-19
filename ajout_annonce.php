@@ -1,6 +1,6 @@
 <?php
 require('inc/init.inc.php');
-$page = 'ajout_annonce.php';
+$page = 'Ajout annonce - ';
 $resultat = $pdo->query('SELECT id_categorie, titre FROM categorie');
 
 $categories = $resultat -> fetchAll(PDO::FETCH_ASSOC);
@@ -30,10 +30,10 @@ if(!empty($_POST)){
 
 	if(isset($_FILES['photo1']) && !empty($_FILES['photo1']['name'])){ // Si une photo est uploadée
 
-		$nom_photo = $_POST['reference'] . '_' . time() . '_' . $_FILES['photo1']['name'];
+		$nom_photo = $_POST['id_annonce'] . '_' . time() . '_' . $_FILES['photo1']['name'];
 		// Si la photo est nommée tshirt.jpg, on la renomme : XX21_1543234454_tshirt.jpg pour aviter les doublons possibles sur le serveur (cf les noms des photos sur facebook par exemple).
 
-		$chemin_photo = $_SERVER['DOCUMENT_ROOT'] . RACINE_ANNONCEO . 'photo/' . $nom_photo;
+		$chemin_photo = $_SERVER['DOCUMENT_ROOT'] . RACINE_ANNONCEO . 'photos/' . $nom_photo;
 		// chemin: c://xampp/htdocs   /PHP/site/   photo/   XX21_1543234454_tshirt.jpg
 
 		$ext = array('image/png', 'image/jpeg', 'image/gif');
@@ -55,7 +55,6 @@ if(!empty($_POST)){
 		}
 	}// fin du if isset($_FILES['photo']['name'])
 
-
 	// Insérer les infos du produit en BDD...
 	// Au préalable, nous aurions vérifié tous les champs (taille, caractères, no empty etc......)
 	// <a href="ajout_annonce%20bis.php">No Title</a>
@@ -64,15 +63,17 @@ if(!empty($_POST)){
 
 
 		if(isset($_POST['Modifier'])){
-			$resultat = $pdo -> prepare("UPDATE produit set titre= :titre, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, photo = :photo, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp, categorie = :categorie,  WHERE id_annonce = :id_annonce");
+			echo 'req modif<br>';
+			$resultat = $pdo -> prepare("UPDATE annonce set titre= :titre, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, photo = :photo, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp, categorie_id = :categorie_id  WHERE id_annonce = :id_annonce");
 
 			$resultat -> bindParam(':id_annonce', $_POST['id_annonce'], PDO::PARAM_INT);
 
 		}
 		else{
 			$resultat = $pdo -> prepare("INSERT INTO annonce (titre, description_courte, description_longue, prix, photo, pays, ville, adresse, cp, membre_id, categorie_id, date_enregistrement) VALUES (:titre, :description_courte, :description_longue, :prix, :photo, :pays, :ville, :adresse, :cp, :membre_id, :categorie_id, now())");
-		}
 
+			$resultat -> bindParam(':membre_id', $_SESSION['membre']['id_membre'], PDO::PARAM_INT);
+		}
 
 		$resultat -> bindParam(':titre', $_POST['titre'], PDO::PARAM_STR);
 		$resultat -> bindParam(':description_courte', $_POST['description_courte'], PDO::PARAM_STR);
@@ -83,13 +84,13 @@ if(!empty($_POST)){
 		$resultat -> bindParam(':ville', $_POST['ville'], PDO::PARAM_STR);
 		$resultat -> bindParam(':adresse', $_POST['adresse'], PDO::PARAM_STR);
 		$resultat -> bindParam(':cp', $_POST['cp'], PDO::PARAM_INT);
-		$resultat -> bindParam(':membre_id', $_SESSION['membre']['id_membre'], PDO::PARAM_INT);
-		$resultat -> bindParam(':categorie_id', $_POST['categorie'], PDO::PARAM_INT);
+		$resultat -> bindParam(':categorie_id', $_POST['categorie_id'], PDO::PARAM_INT);
 
 		if($resultat -> execute()){
 
 			$pdt_insert = (isset($_POST['Modifier'])) ? $_POST['id_annonce'] : $pdo -> lastInsertId(); // Récupère l'ID du dernier enregistrement.
-			header('location:ajout_annonce.php');
+			// header('location:ajout_annonce.php');
+			echo 'ok : ';
 		}
 	}
 }// fin du if(!empty($_POST))
@@ -113,7 +114,7 @@ if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 }
 
 // Créons des variables pour chaque élément à insérer dans le formulaire :
-$reference = (isset($annonce_actuelle)) ? $annonce_actuelle['id_annonce'] : '';
+$id_annonce = (isset($annonce_actuelle)) ? $annonce_actuelle['id_annonce'] : '';
 
 $titre = (isset($annonce_actuelle)) ? $annonce_actuelle['titre'] : '';
 $description_courte = (isset($annonce_actuelle)) ? $annonce_actuelle['description_courte'] : '';
@@ -150,7 +151,7 @@ require('inc/header.inc.php');
 	<input type="text" name="prix" value="<?= $prix ?>" placeholder="Prix figurant dans l'annonce"/>
 
 	<label>Catégorie :</label>
-	<select class="" name="categorie" >
+	<select class="" name="categorie_id" >
 		<option value="0">Toutes les catégories</option>
 		<?php foreach ($categories as $value)  : ?>
 			<option <?= ($categorie == $value['id_categorie'])?' selected ':'' ?>
@@ -159,14 +160,18 @@ require('inc/header.inc.php');
 		</select>
 
 		<label>Photo :</label>
-		<?php if(isset($annonce_actuelle) && !empty($photo)) :  ?>
-			<img src="<?= RACINE_ANNONCEO ?>photos/<?= $photo ?>" height="100px"/>
-			<input type="hidden" name="photo_actuelle" value="<?= $photo ?>" />
-		<?php else : ?>
-		<label for="photo1"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-		</label>
-		<input hidden id="photo1" type="file" name="photo1"/>
-	<?php endif; ?>
+
+		<?php for ($i = 0 ; $i < 5 ; $i++)  : ?>
+			<?php if(isset($annonce_actuelle) && !empty($photo)) :  ?>
+				<label for="photo1">
+					<img src="<?= RACINE_ANNONCEO ?>photos/<?= $photo ?>" height="100px"/>
+				</label>
+				<input type="hidden" name="photo_actuelle" value="<?= $photo ?>" />
+			<?php else : ?>
+				<label for="photo1"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></label>
+			<?php endif; ?>
+		<?php endfor; ?>
+		<input id="photo1" type="file" name="photo1" hidden >
 
 
 		<!-- <label for="photo2"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>

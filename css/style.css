@@ -1,4 +1,29 @@
 @charset "utf_8";
-table{
+table {
     border-collapse: collapse;
+}
+
+h2 {
+    color:dodgerblue;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+footer{
+    height: 2em;
+    background: #f0f0f0;
+}
+
+footer p{
+    text-align:center;
+    line-height: 2em;
+}
+
+.align-right{
+    text
+}
+.prenom{
+    color:cornflowerblue;
 }

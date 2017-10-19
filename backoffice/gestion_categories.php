@@ -17,7 +17,13 @@ if(!empty($_POST)){
     if(empty($msg)){ // validation des champs, ok : enregistrement
         // enregistrement du nouvel utilisateur :
 
-        $resultat = $pdo -> prepare("INSERT INTO  categorie ( titre ,  motscles ) VALUES ( :titre ,  :motscles )");
+        if(isset($_POST['Modifier'])){
+            $resultat = $pdo -> prepare("UPDATE categorie SET titre =:titre ,  motscles=:motscles WHERE id_categorie = :id_categorie " );
+            $resultat -> bindParam(':id_categorie', $_POST['id_categorie'], PDO::PARAM_INT);
+
+        }else {
+            $resultat = $pdo -> prepare("INSERT INTO  categorie ( titre ,  motscles ) VALUES ( :titre ,  :motscles )");
+        }
 
         $resultat -> bindParam(':titre', $_POST['titre'], PDO::PARAM_STR);
         $resultat -> bindParam(':motscles', $_POST['motscles'], PDO::PARAM_STR);
@@ -79,18 +85,26 @@ require_once ('../inc/header.inc.php');
 
         <?php
         debug ($_GET);
+        $id_categorie = (isset($_GET)) ? $_GET['id'] : '';
+
         $titre = 	(isset($_GET['titre'])) ? $_GET['titre'] : '';
         $motscles = 	(isset($_GET['motscles'])) ? $_GET['motscles'] : '';
+
+        $action = (isset($_GET)) ? 'Modifier' : 'Ajouter';
+
         ?>
 
         <form method="post" action="">
+
+            <input type="hidden" name="id_categorie" value="<?= $id_categorie ?>"/>
+
             <label >Titre</label>
             <input type="text" name="titre" value="<?= $titre ?>" placeholder="Titre de la catégorie"/>
 
             <label >Mots clés de la catégorie</label>
             <textarea name="motscles" rows="3" cols="80" placeholder="Mots clés de la catégorie"><?= $motscles ?></textarea>
 
-            <input type="submit" value="Enregistrer">
+            <input name="<?= $action ?>" type="submit" value="<?= $action ?>">
         </form>
     </div>
 </section>

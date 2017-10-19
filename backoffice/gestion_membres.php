@@ -109,7 +109,7 @@ foreach ($membres as $val){
         }
     }
     $contenu .= '<td>';
-    $contenu .= '<a href="../inscription.php?id='.$val['id_membre'].'"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
+    $contenu .= '<a href="?id='.$val['id_membre'].'"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
     $contenu .= ' <a href="supprimer_membre.php?id='.$val['id_membre'].'"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
     $contenu .= '</td>';
     $contenu .= '</tr>';
