@@ -16,6 +16,7 @@ body{
 
 main{
     background: #e7e7e7;
+    padding: 50px;
 }
 
 header{
@@ -26,6 +27,9 @@ table {
     border-collapse: collapse;
 }
 
+h1{
+    text-align: center;
+}
 h2 {
     color:dodgerblue;
 }
@@ -55,4 +59,11 @@ footer p{
 
 .prenom{
     color:cornflowerblue;
+}
+
+th{
+    background: #0f0f0f;
+    color: white;
+    border-color: white;
+    font-weight: normal;
 }

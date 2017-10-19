@@ -39,8 +39,8 @@ foreach ($notes as $val){
         }
     }
     $contenu .= '<td>';
-    $contenu .= '<a href="?id='.$val['id_categorie'].'"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
-    $contenu .= ' <a href="?id='.$val['id_categorie'].'"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
+    $contenu .= '<a href="?id='.$val['id_note'].'"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
+    $contenu .= ' <a href="?id='.$val['id_note'].'"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
     $contenu .= '</td>';
     $contenu .= '</tr>';
 }

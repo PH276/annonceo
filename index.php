@@ -73,7 +73,7 @@ $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 <!-- <h1>Accueil test</h1> -->
 <div class="row">
 
-	<div class="col-md-2">
+	<div class="col-md-3 col-md-offset-1">
 		<form action="" method="post">
 			<div class="form-group">
 				<label class="control-label">Catégorie </label><br/>
@@ -121,7 +121,7 @@ $annonces = $resultat -> fetchAll(PDO::FETCH_ASSOC);
 
 		</form>
 	</div>
-	<div class="col-md-9 col-md-offset-1">
+	<div class="col-md-6 col-md-offset-1">
 
 		<div class="tri">
 			<form class="form-horizontal" action="" method="post">

@@ -23,8 +23,10 @@ if(!empty($_POST)){
 
 	//	$nom_photo = 'default.jpg';
 
-	if(isset($_POST['photo_actuelle'])){
-		$nom_photo = $_POST['photo_actuelle'];
+	for ($i = 1 ; $i <= 5; $i++){
+		if(isset($_POST['photo_actuelle'.$i])){
+			$nom_photo[$i] = $_POST['photo_actuelle'.$i];
+		}
 	}
 	// Si je suis dans le cadre d'une modification de produit, on récupère le nom de l'ancienne photo... mais il se peut que l'utilisateur souhaite changer la photo, c'est le code ci-dessous qui prend le relais.
 
@@ -135,76 +137,92 @@ require('inc/header.inc.php');
 <h1><?= $action ?> une annonce</h1>
 
 <form action="" method="post" enctype="multipart/form-data">
-
 	<input type="hidden" name="id_annonce" value="<?= $id_annonce ?>"/>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<label>Titre :</label>
+				<input class="form-control" type="text" name="titre" value="<?= $titre ?>" placeholder="Titre de l'annonce"/>
+			</div>
 
-	<label>Titre :</label>
-	<input type="text" name="titre" value="<?= $titre ?>" placeholder="Titre de l'annonce"/>
+			<div class="form-group">
+				<label>Description courte :</label>
+				<textarea class="form-control" rows="2" name="description_courte" placeholder="Description courte de l'annonce"><?= $description_courte ?></textarea>
+			</div>
 
-	<label>Description courte :</label>
-	<textarea rows="2" name="description_courte" placeholder="Description courte de l'annonce"><?= $description_courte ?></textarea>
+			<div class="form-group">
+				<label>Description longue :</label>
+				<textarea class="form-control" rows="2" name="description_longue" placeholder="Description longue de l'annonce"><?= $description_longue ?></textarea>
+			</div>
 
-	<label>Description longue :</label>
-	<textarea rows="2" name="description_longue" placeholder="Description longue de l'annonce"><?= $description_longue ?></textarea>
+			<div class="form-group">
+				<label>Prix :</label>
+				<input class="form-control" type="text" name="prix" value="<?= $prix ?>" placeholder="Prix figurant dans l'annonce"/>
+			</div>
 
-	<label>Prix :</label>
-	<input type="text" name="prix" value="<?= $prix ?>" placeholder="Prix figurant dans l'annonce"/>
+			<div class="form-group">
+				<label>Catégorie :</label>
+				<select class="form-control" name="categorie_id" >
+					<option value="0">Toutes les catégories</option>
+					<?php foreach ($categories as $value)  : ?>
+						<option <?= ($categorie == $value['id_categorie'])?' selected ':'' ?> value="<?= $value['id_categorie'] ?>"><?= $value['titre'] ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+		</div>
 
-	<label>Catégorie :</label>
-	<select class="" name="categorie_id" >
-		<option value="0">Toutes les catégories</option>
-		<?php foreach ($categories as $value)  : ?>
-			<option <?= ($categorie == $value['id_categorie'])?' selected ':'' ?>
-				value="<?= $value['id_categorie'] ?>"><?= $value['titre'] ?></option>
-			<?php endforeach; ?>
-		</select>
-
-		<label>Photo :</label>
-
-		<?php for ($i = 0 ; $i < 5 ; $i++)  : ?>
-			<?php if(isset($annonce_actuelle) && !empty($photo)) :  ?>
-				<label for="photo1">
-					<img src="<?= RACINE_ANNONCEO ?>photos/<?= $photo ?>" height="100px"/>
-				</label>
-				<input type="hidden" name="photo_actuelle" value="<?= $photo ?>" />
-			<?php else : ?>
-				<label for="photo1"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></label>
-			<?php endif; ?>
-		<?php endfor; ?>
-		<input id="photo1" type="file" name="photo1" hidden >
-
-
-		<!-- <label for="photo2"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-	</label>
-	<input hidden id="photo2" type="file" name="photo2"/>
-
-	<label for="photo3"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-</label>
-<input hidden id="photo3" type="file" name="photo3"/>
-
-<label for="photo4"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-</label>
-<input hidden id="photo4" type="file" name="photo4"/>
-
-<label for="photo5"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-</label>
-<input hidden id="photo5" type="file" name="photo5"/> -->
-
-<label>Adresse :</label>
-<input type="text" name="adresse" value="<?= $adresse ?>" placeholder=" figurant de l'annonce"/>
-
-<label>Code Postal :</label>
-<input type="text" name="cp" value="<?= $cp ?>" placeholder=" figurant de l'annonce"/>
-
-<label>Ville :</label>
-<input type="text" name="ville" value="<?= $ville ?>" placeholder="de l'annonce"/>
-
-<label>Pays :</label>
-<input type="text" name="pays" value="<?= $pays ?>" placeholder="de l'annonce"/>
+		<div class="col-md-6">
+			<label>Photos :</label>
+			<div class="row">
 
 
-<input type="submit" name="<?= $action ?>" value="<?= $action ?>" />
+				<div class="col-md-1"></div>
+				<?php for ($i = 1 ; $i <= 5 ; $i++)  : ?>
+					<div class="col-md-2">
+						<div class="form-group">
+							<?php if(isset($annonce_actuelle) && !empty($photo)) :  ?>
+								<label for="photo<?= $i ?>">Photo <?= $i ?>
+									<img src="<?= RACINE_ANNONCEO ?>photos/<?= $photo ?>" height="100px"/>
+								</label>
+							<?php else : ?>
+								<label for="photo<?= $i ?>">Photo <?= $i ?></label>
+								<label for="photo<?= $i ?>">
+									<span style="font-size:2em" class="glyphicon glyphicon-camera fa-3x" aria-hidden="true"></span>
+								</label>
+								<input id="photo<?= $i ?>" type="file" name="photo<?= $i ?>" hidden>
+							<?php endif; ?>
+							<input type="hidden" name="photo_actuelle<?= $i ?>" value="<?= $photo1 ?>" />
+						</div>
+					</div>
+				<?php endfor; ?>
+			</div>
 
+			<div class="form-group">
+				<label>Adresse :</label>
+				<textarea  class="form-control" name="adresse" rows="2" placeholder=" figurant de l'annonce"><?= $adresse ?></textarea>
+				<!-- <input type="text" name="adresse" value="" /> -->
+			</div>
+
+			<div class="form-group">
+				<label>Code Postal :</label>
+				<input class="form-control" type="text" name="cp" value="<?= $cp ?>" placeholder=" figurant de l'annonce"/>
+			</div>
+
+			<div class="form-group">
+				<label>Ville :</label>
+				<input class="form-control" type="text" name="ville" value="<?= $ville ?>" placeholder="de l'annonce"/>
+			</div>
+
+			<div class="form-group">
+				<label>Pays :</label>
+				<input class="form-control" type="text" name="pays" value="<?= $pays ?>" placeholder="de l'annonce"/>
+			</div>
+
+		</div>
+
+
+	</div>
+	<input class="btn btn-primary center-block" type="submit" name="<?= $action ?>" value="Enregistrer" />
 </form>
 <?php
 require('inc/footer.inc.php');
