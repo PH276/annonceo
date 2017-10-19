@@ -1,11 +1,10 @@
-</div>
 </main>
 <footer>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1">
 
-				<p><a href="#">mentions légales</a> - <a href="#">Conditions générales de vente</a></p>
+				<p><a href="mentions_legales.php">mentions légales</a> - <a href="#">Conditions générales de vente</a></p>
 			</div>
 			<div class="col-md-5">
 				<p class="align-right">&copy <?= date('Y') ?> Annonceo</p>

@@ -1,4 +1,27 @@
 @charset "utf_8";
+.navbar-brand{
+    font-family: 'Pacifico', cursive;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.navbar-brand::first-letter{
+    font-size: 1.5em;
+
+}
+
+body{
+    background: #8293ac;
+}
+
+main{
+    background: #e7e7e7;
+}
+
+header{
+    margin-bottom: 20px;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -24,6 +47,10 @@ footer p{
 
 .align-right{
     text-align: right;
+}
+
+.texte-centre{
+    text-align: center;
 }
 
 .prenom{
