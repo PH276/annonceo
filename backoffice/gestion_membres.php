@@ -1,5 +1,14 @@
 <?php
 require_once ('../inc/init.inc.php');
+$pseudo = 		'';
+$nom = 			'';
+$prenom = 		'';
+$email = 		'';
+$telephone = 		'';
+$civilite = 	'';
+$statut = 	'';
+
+
 if(!empty($_POST)){
     debug($_POST);
 
@@ -13,6 +22,7 @@ if(!empty($_POST)){
 
     if(empty($_POST['prenom'])){
         $msg .= '<div class="erreur">Veuillez renseigner un prénom.</div>';
+        $prenom = '';
     }
 
     if(empty($_POST['email'])){
@@ -22,6 +32,13 @@ if(!empty($_POST)){
     if(empty($_POST['telephone'])){
         $msg .= '<div class="erreur">Veuillez renseigner un telephone.</div>';
     }
+    $pseudo = 		(isset($_POST['pseudo'])) ? $_POST['pseudo'] : '';
+    $nom = 			(isset($_POST['nom'])) ? $_POST['nom'] : '';
+    $prenom = 		(isset($_POST['prenom'])) ? $_POST['prenom'] : '';
+    $email = 		(isset($_POST['email'])) ? $_POST['email'] : '';
+    $telephone = 		(isset($_POST['telephone'])) ? $_POST['telephone'] : '';
+    $civilite = 	(isset($_POST['civilite'])) ? $_POST['civilite'] : '';
+    $statut = 	(isset($_POST['statut'])) ? $_POST['statut'] : '';
 
     if(empty($msg)){ // validation des champs, ok : enregistrement
         echo 'ok ';
@@ -33,7 +50,7 @@ if(!empty($_POST)){
 
         if($resultat -> rowCount() > 0){ // Signifie que le pseudo est déjà utilisé.
             $id_membre = $resultat -> fetch();
-            // Nous aurions pu lui proposer 2/3 variantes de son pseudo, en ayant vérifié qu'ils sont disponibles.
+
 
             // requete INSERT
             $resultat = $pdo -> prepare("UPDATE FROM membre SET pseudo = :pseudo ,  nom=:nom ,  prenom=:prenom ,  telephone=:telephone ,  email=:email ,  civilite=:civilite ,  statut=:statut WHERE id_membre = $id_membre");
@@ -49,6 +66,23 @@ if(!empty($_POST)){
             echo ($resultat -> execute());
         } // fin du else rowCount()
     } // fin du if !empty $msg
+}
+if (!empty($_GET['id'])){
+    $resultat = $pdo -> prepare("SELECT * FROM membre WHERE id_membre = :id");
+    $resultat -> bindParam(':id', $_GET['id'], PDO::PARAM_STR);
+    $resultat -> execute();
+
+    if($resultat -> rowCount() > 0){ // Signifie que le id existe bien
+        $membre = $resultat -> fetch();
+
+        $pseudo = $membre['pseudo'];
+        $nom = 			$membre['nom'];
+        $prenom = 		$membre['prenom'];
+        $email = 		$membre['email'];
+        $telephone = 	$membre['telephone'];
+        $civilite = 	$membre['civilite'];
+        $statut = 	$membre['statut'];
+    }
 }
 
 $id = (isset($_GET['id']) && !empty($_GET['id']))?$_GET['id']:'';
@@ -99,8 +133,6 @@ foreach ($membres as $val){
                 default :
                 $contenu .=  $val2;
             }
-
-
             $contenu .= '</td>';
         }
     }
@@ -110,18 +142,15 @@ foreach ($membres as $val){
     $contenu .= '</td>';
     $contenu .= '</tr>';
 }
+
 $contenu .= '</table>';
 
 $page = 'gestion membres - ';
 require_once ('../inc/header.inc.php');
-debug($_POST);
-$pseudo = 		(isset($_POST['pseudo'])) ? $_POST['pseudo'] : '';
-$nom = 			(isset($_POST['nom'])) ? $_POST['nom'] : '';
-$prenom = 		(isset($_POST['prenom'])) ? $_POST['prenom'] : '';
-$email = 		(isset($_POST['email'])) ? $_POST['email'] : '';
-$telephone = 		(isset($_POST['telephone'])) ? $_POST['telephone'] : '';
-$civilite = 	(isset($_POST['civilite'])) ? $_POST['civilite'] : '';
-$statut = 	(isset($_POST['statut'])) ? $_POST['statut'] : '';
+if (!empty($_POST)){
+    debug($_POST);
+}
+
 ?>
 
 <!--  contenu HTML  -->

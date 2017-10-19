@@ -12,6 +12,7 @@ input[type="file"] {
 }
 
 footer{
+    margin-top: 50px;
     height: 2em;
     background: #f0f0f0;
 }
@@ -22,8 +23,9 @@ footer p{
 }
 
 .align-right{
-    text
+    text-align: right;
 }
+
 .prenom{
     color:cornflowerblue;
 }
